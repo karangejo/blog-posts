@@ -20,8 +20,6 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    - name: list
-      run: ls ; pwd
     - uses: garygrossgarten/github-action-ssh@v0.5.0
       with:
       # Command to execute on the remote server.
@@ -32,7 +30,6 @@ jobs:
         username: ${{ secrets.SERVER_USER_NAME }}
       # Password for password-based user authentication.
         password: ${{ secrets.SERVER_PASS }}
-    - name: Copy folder content recursively to remote
     - uses: garygrossgarten/github-action-scp@release
       with:
         local: ./backend 
