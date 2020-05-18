@@ -4,9 +4,9 @@ name: Deploy Posts
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on:
-  push:
-    branches: [ master ]
+# on:
+#   push:
+#     branches: [ master ]
     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,20 +20,27 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    - uses: garygrossgarten/github-action-scp@release
+      with:
+        local: ./backend 
+        remote: /home/karang/Documents/karangejo-posts/backend
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER_NAME }}
+        password: ${{ secrets.SERVER_PASS }} 
+    - uses: garygrossgarten/github-action-scp@release
+      with:
+        local: ./posts 
+        remote: /home/karang/Documents/karangejo-posts/posts
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER_NAME }}
+        password: ${{ secrets.SERVER_PASS }} 
     - uses: garygrossgarten/github-action-ssh@v0.5.0
       with:
       # Command to execute on the remote server.
-        command: whoami
+        command: node /home/karang/Documents/karangejo-posts/backend/uploadPosts.js
       # Hostname or IP address of the server.
         host: ${{ secrets.SERVER_IP }}
       # Username for authentication.
         username: ${{ secrets.SERVER_USER_NAME }}
       # Password for password-based user authentication.
         password: ${{ secrets.SERVER_PASS }}
-    - uses: garygrossgarten/github-action-scp@release
-      with:
-        local: ./backend 
-        remote: /home/karang/Documents
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER_NAME }}
-        password: ${{ secrets.SERVER_PASS }} 
