@@ -20,8 +20,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-      with:
-        run: ls ; pwd
+    - name: list
+      run: ls ; pwd
     - uses: garygrossgarten/github-action-ssh@v0.5.0
       with:
       # Command to execute on the remote server.
