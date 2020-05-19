@@ -19,8 +19,4 @@ const postSchema = new mongoose.Schema({
   },
 });
 
-const postDB = mongoose.connection.useDb("posts");
-
-const postInfo = postDB.model("post", postSchema);
-
-module.exports = postInfo;
+module.exports = mongoose.model("post", postSchema);
