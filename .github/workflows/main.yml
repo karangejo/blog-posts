@@ -4,13 +4,12 @@ name: Deploy Posts
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-# on:
-#   push:
-#     branches: [ master ]
+on:
+  push:
+    branches: [ master ]
     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   deploy:
     name: deploy_over_ssh
     # The type of runner that the job will run on
@@ -20,6 +19,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    # Copies backend to the remote server
     - uses: garygrossgarten/github-action-scp@release
       with:
         local: ./backend 
@@ -27,6 +27,7 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER_NAME }}
         password: ${{ secrets.SERVER_PASS }} 
+    # Copies posts to remote server
     - uses: garygrossgarten/github-action-scp@release
       with:
         local: ./posts 
@@ -34,6 +35,7 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER_NAME }}
         password: ${{ secrets.SERVER_PASS }} 
+    # uploads posts to database on remote server
     - uses: garygrossgarten/github-action-ssh@v0.5.0
       with:
       # Command to execute on the remote server.
