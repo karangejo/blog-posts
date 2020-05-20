@@ -37,7 +37,7 @@ const main = async () => {
       }
     });
   };
-
+  await mongoose.connection.collection("posts").drop();
   await uploadMdToDb("../posts/blog", "blog");
   await uploadMdToDb("../posts/code", "code");
   setTimeout(() => mongoose.disconnect(), 2000);
