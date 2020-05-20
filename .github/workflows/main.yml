@@ -19,8 +19,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: remove-folders
+        uses: garygrossgarten/github-action-ssh@v0.5.0
+        with:
+          # Command to execute on the remote server.
+          command: rm -r /home/karang/Documents/karangejo-posts/backend/ ; rm -r /home/karang/Documents/karangejo-posts/posts
+          # Hostname or IP address of the server.
+          host: ${{ secrets.SERVER_IP }}
+          # Username for authentication.
+          username: ${{ secrets.SERVER_USER_NAME }}
+          # Password for password-based user authentication.
+          password: ${{ secrets.SERVER_PASS }}
       # Copies backend to the remote server
       - uses: garygrossgarten/github-action-scp@release
+        needs: remove-folders
         with:
           local: ./backend
           remote: /home/karang/Documents/karangejo-posts/backend
@@ -29,6 +41,7 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
       # Copies posts to remote server
       - uses: garygrossgarten/github-action-scp@release
+        needs: remove-folders
         with:
           local: ./posts
           remote: /home/karang/Documents/karangejo-posts/posts
@@ -37,6 +50,7 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
       # uploads posts to database on remote server
       - uses: garygrossgarten/github-action-ssh@v0.5.0
+        needs: remove-folders
         with:
           # Command to execute on the remote server.
           command: cd /home/karang/Documents/karangejo-posts/backend/ ; npm install ; node uploadPosts.js
