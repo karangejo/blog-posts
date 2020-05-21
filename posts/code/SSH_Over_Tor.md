@@ -1,4 +1,4 @@
-Have you ever needed access to a home or work computer through ssh but you just don't have public IP and are not able to set pne up for whatever reason.
+Have you ever needed access to a home or work computer through ssh but you just don't have public IP and are not able to set one up for whatever reason.
 
 I will show ou how to set up ssh over the TOR network giving you an onion address to ssh into instead of a public IP!
 
@@ -42,7 +42,7 @@ service ssh restart
 
 Take note of the changes made to the file /var/lib/tor/torssh/hostname. Save this hotname for later
 
-OK! your host is up and running and you now have an onion address with an ssh service running over it. Congratulation! But how do we connect to it?
+OK! your host is up and running and you now have an onion address with an ssh service running over it. Congratulations! But how do we connect to it?
 
 ## Client Setup
 
