@@ -32,7 +32,6 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
       # Copies backend to the remote server
       - uses: garygrossgarten/github-action-scp@release
-        needs: remove-folders
         with:
           local: ./backend
           remote: /home/karang/Documents/karangejo-posts/backend
@@ -41,7 +40,6 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
       # Copies posts to remote server
       - uses: garygrossgarten/github-action-scp@release
-        needs: remove-folders
         with:
           local: ./posts
           remote: /home/karang/Documents/karangejo-posts/posts
@@ -50,7 +48,6 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
       # uploads posts to database on remote server
       - uses: garygrossgarten/github-action-ssh@v0.5.0
-        needs: remove-folders
         with:
           # Command to execute on the remote server.
           command: cd /home/karang/Documents/karangejo-posts/backend/ ; npm install ; node uploadPosts.js
